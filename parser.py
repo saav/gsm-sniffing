@@ -1,7 +1,8 @@
 #!/usr/local/bin/python3.4
 import csv
 
-f = open('captures/scan1.csv')
+filename = input("Enter a filename (.csv extension assumed): ") + '.csv'
+f = open('captures/' + filename)
 csv_f = csv.reader(f)
 tmsi_list = []
 signal_list = []
