@@ -42,19 +42,30 @@ db = pymysql.connect("localhost","root","","gsm")
 # prepare a cursor object using cursor() method
 cursor = db.cursor()
 
-sql = "INSERT INTO cell_tower(mnc, mcc, lac, ci) VALUES ('%d', '%d', '%d', '%d')" % (int(mnc), int(mcc), int(lac, 0), int(ci, 0))
+sql = "INSERT INTO cell_tower(mnc, mcc, lac, ci) \
+VALUES ('%d', '%d', '%d', '%d')" % \
+(int(mnc), int(mcc), int(lac, 0), int(ci, 0))
 
-cursor.execute(sql)
-db.commit()
+try:
+	cursor.execute(sql)
+	db.commit()
+except:
+	db.rollback()
 
 for i in range(0,length):
 	tmsi = tmsi_list[i]
 	signal = signal_list[i]
 	last_seen = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-	sql = "INSERT INTO cell_phone(tmsi, last_seen, signal_strength, lac, ci) VALUES ('%s', '%s', '%d', '%d', '%d')" % (tmsi, last_seen, int(signal), int(lac, 0), int(ci, 0))
-	cursor.execute(sql)
-	db.commit()	
+	sql = "INSERT INTO cell_phone(tmsi, last_seen, signal_strength, lac, ci) \
+	VALUES ('%s', '%s', '%d', '%d', '%d')" % \
+	(tmsi, last_seen, int(signal), int(lac, 0), int(ci, 0))
+	
+	try:
+		cursor.execute(sql)
+		db.commit()
+	except:
+		db.rollback()
 
 db.close()
 
