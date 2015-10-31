@@ -1,11 +1,16 @@
 #!/bin/bash
 count=1
 while read line; do
-	arfcn=$(echo 0.2*$line+890+45 | bc)
-	airprobe_rtlsdr.py -f $arfcn"M" &
-	tshark -i lo -a duration:5 -w /home/zhihua/capture/capture"$count".pcap
-	pkill -f airprobe_rtlsdr.py
-	pkill tshark
-	count=$((count+1))
-	echo $count
+        arfcn=$(echo 0.2*$line+890+45 | bc)
+        airprobe_rtlsdr.py -f $arfcn"M" &
+        tshark -i lo -a duration:5 -w ./capture/capture"$count".pcap
+        pkill -f airprobe_rtlsdr.py
+        pkill tshark
+        if [ $count -eq 1 ]
+        then
+                count=$((count+1))
+        else
+                count=$((count-1))
+        fi
+        echo $count
 done < $1
