@@ -25,7 +25,6 @@
     <div id="map"></div>
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <script>
-
 var map;
 var networkNames = ["Singtel", "StarHub", "M1"];
 function initMap() {
@@ -74,6 +73,27 @@ function initMap() {
                 lng: youPosition.coords.longitude
               };
 
-include 'apiKey.php';
+              var youMarker = new google.maps.Marker({
+                position: pos,
+                map: map,
+                title: 'You are here!'
+              });
+            });
+          }
+        },
+        dataType: "json",
+        error: function(data) {
+          alert(JSON.stringify(data));
+        }
+      });
+    }
 
- ?>
+  });
+
+}
+
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $mapsApiKey; ?>&callback=initMap"
+        async defer></script>
+  </body>
+</html>
