@@ -5,7 +5,7 @@ from datetime import datetime
 import pymysql
 
 filename = str(sys.argv[0])
-f = open('captures/' + filename)
+f = open('capture/' + filename)
 csv_f = csv.reader(f)
 prev_tmsi_list = []
 tmsi_list = []
