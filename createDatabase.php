@@ -8,17 +8,15 @@ if ($conn->query($sql) === TRUE) {
     echo "Error creating database: " . $conn->error;
 }
 
-$sql = "CREATE DATABASE gsm";
-
 mysqli_select_db($conn, 'gsm');
 
 // sql to create table
 $sql = "CREATE TABLE cell_tower (
-id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-mnc INT(3),
-mcc INT(3),
-lac INT(3),
-ci INT(5)
+mnc INT(6) NOT NULL,
+mcc INT(6) NOT NULL,
+lac INT(6) NOT NULL,
+ci INT(6) NOT NULL,
+PRIMARY KEY(lac, ci)
 )";
 
 if ($conn->query($sql) === TRUE) {
@@ -28,10 +26,13 @@ if ($conn->query($sql) === TRUE) {
 }
 
 $sql = "CREATE TABLE cell_phone (
-id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-tmsi INT(3),
-last_seen TIMESTAMP,
-signal_strength INT(3)
+tmsi VARCHAR(10),
+last_seen DATETIME NOT NULL,
+signal_strength INT(3) NOT NULL,
+lac INT(6) NOT NULL,
+ci INT(6) NOT NULL,
+FOREIGN KEY(lac, ci) REFERENCES cell_tower(lac, ci),
+PRIMARY KEY(tmsi, lac, ci)
 )";
 
 if ($conn->query($sql) === TRUE) {
@@ -40,7 +41,21 @@ if ($conn->query($sql) === TRUE) {
     echo "Error creating table: " . $conn->error;
 }
 
+$sql = "CREATE TABLE cell_connection (
+lac INT(6),
+ci INT(6),
+stamp DATETIME,
+new INT(4) NOT NULL,
+repeated INT(4) NOT NULL,
+FOREIGN KEY(lac, ci) REFERENCES cell_tower(lac, ci),
+PRIMARY KEY(lac, ci, stamp)
+)";
 
+if ($conn->query($sql) === TRUE) {
+    echo "Table cell_connection created successfully";
+} else {
+    echo "Error creating table: " . $conn->error;
+}
 $conn->close();
 
 ?>

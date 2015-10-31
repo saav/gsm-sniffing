@@ -27,6 +27,7 @@
     <script>
 
 var map;
+var networkNames = ["Singtel", "StarHub", "M1"];
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: -34.397, lng: 150.644},
@@ -51,15 +52,15 @@ function initMap() {
         url: "https://www.googleapis.com/geolocation/v1/geolocate?key=<?php echo $geolocationApiKey; ?>",
         data: JSON.stringify(dataToSend),
         success: function(position) {
-          alert(JSON.stringify(position));
+          alert(JSON.stringify(msg[0]) + " and x is " + x);
           map.setCenter(position.location, 1);
           var marker = new google.maps.Marker({
             position: position.location,
             map: map,
-            title: 'Hello World!'
+            title: 'LAC:' + dataToSend["cellTowers"][0]["locationAreaCode"] + ", CellID: " + dataToSend["cellTowers"][0]["cellId"]
           });
           var infowindow = new google.maps.InfoWindow({
-            content: "This is a cell tower"
+            content: 'LAC:' + dataToSend["cellTowers"][0]["locationAreaCode"] + ", CellID: " + dataToSend["cellTowers"][0]["cellId"] + ", Network: " + networkNames[dataToSend["cellTowers"][0]["mobileNetworkCode"] - 1]
           });
           infowindow.open(map, marker);
 
