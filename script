@@ -5,9 +5,11 @@ while read line; do
         numarfcn=$((numarfcn+1))
         arfcn=$(echo 0.2*$line+890+45 | bc)
         airprobe_rtlsdr.py -f $arfcn"M" &
-        tshark -i lo -a duration:5 -w ./capture/capture"$count".pcap
+        tshark -i lo -a duration:10 -w ./capture/scan"$count".pcap
         pkill -f airprobe_rtlsdr.py
         pkill tshark
+        generator.sh scan"$count".pcap scan"$count".csv
+        parser.py scan"$count"
         if [ $count -eq 1 ]
         then
                 count=$((count+1))
