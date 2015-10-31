@@ -9,7 +9,7 @@ while read line; do
         pkill -f airprobe_rtlsdr.py
         pkill tshark
         generator.sh scan"$count".pcap scan"$count".csv
-        parser.py scan"$count"
+        parser.py scan"$count".csv
         if [ $count -eq 1 ]
         then
                 count=$((count+1))
