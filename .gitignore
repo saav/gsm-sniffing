@@ -1,3 +1,6 @@
 *.pcapng
 *.xml
 *.csv
+config.php
+apiKey.php
+data.json

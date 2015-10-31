@@ -1,0 +1,111 @@
+ARFCN=45 MCC=525 MNC=03 (Singapore, M1)
+Signal Strength: -67
+
+ARFCN=47 MCC=525 MNC=03 (Singapore, M1)
+Signal Strength: -67
+
+ARFCN=124 MCC=525 MNC=01 (Singapore, SingTel)
+Signal Strength: -69
+
+ARFCN=93 MCC=525 MNC=01 (Singapore, SingTel)
+Signal Strength: -71
+
+ARFCN=60 MCC=525 MNC=01 (Singapore, SingTel)
+Signal Strength: -73
+
+ARFCN=41 MCC=525 MNC=03 (Singapore, M1)
+Signal Strength: -77
+
+ARFCN=2 MCC=525 MNC=03 (Singapore, M1)
+Signal Strength: -78
+
+ARFCN=49 MCC=525 MNC=03 (Singapore, M1)
+Signal Strength: -78
+
+ARFCN=34 MCC=525 MNC=03 (Singapore, M1)
+Signal Strength: -79
+
+ARFCN=35 MCC=525 MNC=03 (Singapore, M1)
+Signal Strength: -80
+
+ARFCN=42 MCC=525 MNC=03 (Singapore, M1)
+Signal Strength: -81
+
+ARFCN=628 MCC=525 MNC=01 (Singapore, SingTel)
+Signal Strength: -81
+
+ARFCN=40 MCC=525 MNC=03 (Singapore, M1)
+Signal Strength: -83
+
+ARFCN=750 MCC=525 MNC=05 (Singapore, StarHub)
+Signal Strength: -83
+
+ARFCN=784 MCC=525 MNC=03 (Singapore, M1)
+Signal Strength: -83
+
+ARFCN=87 MCC=525 MNC=01 (Singapore, SingTel)
+Signal Strength: -85
+
+ARFCN=43 MCC=525 MNC=03 (Singapore, M1)
+Signal Strength: -87
+
+ARFCN=751 MCC=525 MNC=05 (Singapore, StarHub)
+Signal Strength: -89
+
+ARFCN=762 MCC=525 MNC=03 (Singapore, M1)
+Signal Strength: -90
+
+ARFCN=777 MCC=525 MNC=03 (Singapore, M1)
+Signal Strength: -90
+
+ARFCN=89 MCC=525 MNC=01 (Singapore, SingTel)
+Signal Strength: -91
+
+ARFCN=775 MCC=525 MNC=03 (Singapore, M1)
+Signal Strength: -91
+
+ARFCN=748 MCC=525 MNC=05 (Singapore, StarHub)
+Signal Strength: -92
+
+ARFCN=622 MCC=525 MNC=01 (Singapore, SingTel)
+Signal Strength: -93
+
+ARFCN=765 MCC=525 MNC=03 (Singapore, M1)
+Signal Strength: -93
+
+ARFCN=757 MCC=525 MNC=05 (Singapore, StarHub)
+Signal Strength: -94
+
+ARFCN=771 MCC=525 MNC=03 (Singapore, M1)
+Signal Strength: -94
+
+ARFCN=783 MCC=525 MNC=03 (Singapore, M1)
+Signal Strength: -95
+
+ARFCN=634 MCC=525 MNC=01 (Singapore, SingTel)
+Signal Strength: -96
+
+ARFCN=779 MCC=525 MNC=03 (Singapore, M1)
+Signal Strength: -97
+
+ARFCN=631 MCC=525 MNC=01 (Singapore, SingTel)
+Signal Strength: -99
+
+ARFCN=781 MCC=525 MNC=03 (Singapore, M1)
+Signal Strength: -99
+
+ARFCN=621 MCC=525 MNC=01 (Singapore, SingTel)
+Signal Strength: -100
+
+ARFCN=625 MCC=525 MNC=01 (Singapore, SingTel)
+Signal Strength: -100
+
+ARFCN=773 MCC=525 MNC=03 (Singapore, M1)
+Signal Strength: -100
+
+ARFCN=630 MCC=525 MNC=01 (Singapore, SingTel)
+Signal Strength: -101
+
+ARFCN=739 MCC=525 MNC=05 (Singapore, StarHub)
+Signal Strength: -101
+
