@@ -1,6 +1,8 @@
 #!/bin/bash
 count=1
+numarfcn=0
 while read line; do
+        numarfcn=$((numarfcn+1))
         arfcn=$(echo 0.2*$line+890+45 | bc)
         airprobe_rtlsdr.py -f $arfcn"M" &
         tshark -i lo -a duration:5 -w ./capture/capture"$count".pcap
@@ -13,4 +15,8 @@ while read line; do
                 count=$((count-1))
         fi
         echo $count
+        if [ $numarfcn -eq 29 ]
+        then
+                exit
+        fi
 done < $1
