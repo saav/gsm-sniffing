@@ -1,2 +1,2 @@
-tshark -r reportScans.pcapng —Y “frame.number>312” -T fields -e gsm_a.tmsi -e gsmtap.signal_dbm -e gsm_a.bssmap.cell_ci -e e212.mcc -e e212.mnc -e gsm_a.lac -E separator=, > a.csv
+tshark -r reportScans.pcapng -T fields -e gsm_a.tmsi -e gsmtap.signal_dbm -e gsm_a.bssmap.cell_ci -e e212.mcc -e e212.mnc -e gsm_a.lac -E separator=, > a.csv
 
