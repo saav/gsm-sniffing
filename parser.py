@@ -2,9 +2,9 @@
 import sys
 import csv
 from datetime import datetime
-import pymysql
+import MySQLdb
 
-filename = str(sys.argv[0])
+filename = str(sys.argv[1])
 f = open('capture/' + filename)
 csv_f = csv.reader(f)
 prev_tmsi_list = []
@@ -35,15 +35,18 @@ for row in csv_f:
 	if row[4] and not mnc:
 		mnc = row[4]
 	if row[5] and not lac:
-		lac = row[5]
+	        lac = row[5]
 
 length = len(tmsi_list)
 
 # Open database connection
-db = pymysql.connect("localhost","root","","gsm")
+db = MySQLdb.connect("localhost","root","","gsm")
 
 # prepare a cursor object using cursor() method
 cursor = db.cursor()
+
+if (lac == '' or ci == '' or mcc == '' or mnc == ''):
+        sys.exit()
 
 sql = "INSERT INTO cell_tower(mnc, mcc, lac, ci) \
 VALUES ('%d', '%d', '%d', '%d')" % \

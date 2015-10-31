@@ -8,8 +8,8 @@ while read line; do
         tshark -i lo -a duration:10 -w ./capture/scan"$count".pcap
         pkill -f airprobe_rtlsdr.py
         pkill tshark
-        generator.sh scan"$count".pcap scan"$count".csv
-        parser.py scan"$count".csv
+        ./generator.sh scan"$count".pcap scan"$count".csv
+        python parser.py scan"$count".csv
         if [ $count -eq 1 ]
         then
                 count=$((count+1))

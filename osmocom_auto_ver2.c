@@ -38,7 +38,7 @@ int main(int argc, char** argv){
 			dup2(fileDis,1);
 			dup2(fileDis,2);
 
-			char* command[] = {"./src/host/layer23/src/misc/cell_log",NULL};	
+			char* command[] = {"/home/user/cs3235/osmocom-bb/src/host/layer23/src/misc/cell_log",NULL};	
 			execv(command[0],command);
 
 			exit(0);
