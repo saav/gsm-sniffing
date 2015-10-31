@@ -1,10 +1,10 @@
 #!/usr/bin/python
-
+import sys
 import csv
 from datetime import datetime
 import pymysql
 
-filename = input("Enter a filename (.csv extension assumed): ") + '.csv'
+filename = str(sys.argv[0])
 f = open('captures/' + filename)
 csv_f = csv.reader(f)
 prev_tmsi_list = []
