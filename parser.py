@@ -3,6 +3,7 @@ import sys
 import csv
 from datetime import datetime
 import MySQLdb
+#import pymysql
 
 filename = str(sys.argv[1])
 f = open('capture/' + filename)
@@ -17,8 +18,10 @@ lac = ''
 time_stamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 n = 0
 r = 0
+count = 0
 
 for row in csv_f:
+	count = count + 1
 	if row[0]:
 		tmsi_list.append(row[0])
 		if row[1]:
@@ -28,8 +31,9 @@ for row in csv_f:
 				signal_list.append(int(row[2]))
 			elif row[1]:
 				signal_list.append(int(row[1]))
-	if row[2] and not ci:
+	if row[2] and not ci and not row[0]:
 		ci = row[2]
+		print(count)
 	if row[3] and not mcc:
 		mcc = row[3]
 	if row[4] and not mnc:
@@ -38,15 +42,23 @@ for row in csv_f:
 	        lac = row[5]
 
 length = len(tmsi_list)
+print(ci)
+print(lac)
+print(mcc)
+print(mnc)
+
 
 # Open database connection
 db = MySQLdb.connect("localhost","root","","gsm")
+
+#For Python3
+#db = pymysql.connect("localhost","root","","gsm")
 
 # prepare a cursor object using cursor() method
 cursor = db.cursor()
 
 if (lac == '' or ci == '' or mcc == '' or mnc == ''):
-        sys.exit()
+	sys.exit()
 
 sql = "INSERT INTO cell_tower(mnc, mcc, lac, ci) \
 VALUES ('%d', '%d', '%d', '%d')" % \
@@ -114,4 +126,3 @@ except:
 
 #close db connection
 db.close()
-
