@@ -37,32 +37,30 @@ function initMap() {
   var message;
   $.getJSON('/backend.php?towers', function(msg) {
     message = JSON.stringify(msg);
-    alert(message);
     for (var x = 0; x < msg.length; x++) {
       var dataToSend = {
         "cellTowers": [
           msg[x]
         ]
       };
-      alert(JSON.stringify(dataToSend));
       $.ajax({
         type: "POST",
         contentType: "application/json",
         url: "https://www.googleapis.com/geolocation/v1/geolocate?key=<?php echo $geolocationApiKey; ?>",
         data: JSON.stringify(dataToSend),
+        dataToSend: dataToSend,
         success: function(position) {
-          alert(JSON.stringify(msg[0]) + " and x is " + x);
           map.setCenter(position.location, 1);
           var marker = new google.maps.Marker({
             position: position.location,
             map: map,
-            title: 'LAC:' + dataToSend["cellTowers"][0]["locationAreaCode"] +
-            ", CellID: " + dataToSend["cellTowers"][0]["cellId"]
+            title: 'LAC:' + this.dataToSend["cellTowers"][0]["locationAreaCode"] +
+            ", CellID: " + this.dataToSend["cellTowers"][0]["cellId"]
           });
           var infowindow = new google.maps.InfoWindow({
-            content: 'LAC:' + dataToSend["cellTowers"][0]["locationAreaCode"] +
-            ", CellID: " + dataToSend["cellTowers"][0]["cellId"] + ", Network: " +
-            networkNames[dataToSend["cellTowers"][0]["mobileNetworkCode"] - 1]
+            content: 'LAC:' + this.dataToSend["cellTowers"][0]["locationAreaCode"] +
+            ", CellID: " + this.dataToSend["cellTowers"][0]["cellId"] + ", Network: " +
+            networkNames[this.dataToSend["cellTowers"][0]["mobileNetworkCode"] - 1]
           });
           infowindow.open(map, marker);
 
@@ -83,7 +81,7 @@ function initMap() {
         },
         dataType: "json",
         error: function(data) {
-          alert(JSON.stringify(data));
+          console.log(JSON.stringify(data));
         }
       });
     }
