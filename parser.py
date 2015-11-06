@@ -33,7 +33,6 @@ for row in csv_f:
 				signal_list.append(int(row[1]))
 	if row[2] and not ci and not row[0]:
 		ci = row[2]
-		print(count)
 	if row[3] and not mcc:
 		mcc = row[3]
 	if row[4] and not mnc:
@@ -42,11 +41,6 @@ for row in csv_f:
 	        lac = row[5]
 
 length = len(tmsi_list)
-print(ci)
-print(lac)
-print(mcc)
-print(mnc)
-
 
 # Open database connection
 db = MySQLdb.connect("localhost","root","","gsm")
