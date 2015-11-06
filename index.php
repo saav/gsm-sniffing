@@ -29,10 +29,12 @@ var map;
 var networkNames = ["Singtel", "StarHub", "M1"];
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: -34.397, lng: 150.644},
+    center: {lat: -1.3, lng: 103.8},
     zoom: 15,
     mapTypeId: google.maps.MapTypeId.HYBRID
   });
+
+var heatMapData = [];
 
   var message;
   $.getJSON('/backend.php?towers', function(msg) {
@@ -62,7 +64,17 @@ function initMap() {
             ", CellID: " + this.dataToSend["cellTowers"][0]["cellId"] + ", Network: " +
             networkNames[this.dataToSend["cellTowers"][0]["mobileNetworkCode"] - 1]
           });
-          infowindow.open(map, marker);
+
+          google.maps.event.addListener(marker, 'mouseover', function() {
+              infowindow.open(map, this);
+          });
+
+          // assuming you also want to hide the infowindow when user mouses-out
+          google.maps.event.addListener(marker, 'mouseout', function() {
+              infowindow.close();
+          });
+
+          // infowindow.open(map, marker);
 
           if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(youPosition) {
@@ -78,6 +90,19 @@ function initMap() {
               });
             });
           }
+
+          $.getJSON('/backend.php?ci=' + this.dataToSend["cellTowers"][0]["cellId"] + '&lac='
+            + this.dataToSend["cellTowers"][0]["locationAreaCode"], function(result) {
+
+            heatMapData.push({location: new google.maps.LatLng( position.location.lat, position.location.lng ),
+              weight: result[result.length - 1].new + result[result.length - 1].repeated });
+            var heatmap = new google.maps.visualization.HeatmapLayer({
+              data: heatMapData
+            });
+            heatmap.setOptions({radius: result[result.length - 1].new + result[result.length - 1].repeated});
+            heatmap.setMap(map);
+          });
+
         },
         dataType: "json",
         error: function(data) {
@@ -91,7 +116,15 @@ function initMap() {
 }
 
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $mapsApiKey; ?>&callback=initMap"
-        async defer></script>
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $mapsApiKey; ?>&callback=initMap"
+        async defer></script> -->
+    <!-- <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=<?php echo $mapsApiKey;
+      ?>&libraries=visualization&sensor=true_or_false&callback=initMap">
+    </script> -->
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=<?php echo $mapsApiKey;
+        ?>&libraries=visualization&callback=initMap">
+    </script>
   </body>
 </html>
