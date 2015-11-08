@@ -26,7 +26,7 @@ if ($conn->query($sql) === TRUE) {
 }
 
 $sql = "CREATE TABLE cell_phone (
-tmsi VARCHAR(10),
+tmsi VARCHAR(32),
 last_seen DATETIME NOT NULL,
 signal_strength INT(3) NOT NULL,
 lac INT(6) NOT NULL,

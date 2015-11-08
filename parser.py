@@ -1,6 +1,7 @@
 #!/usr/bin/python
 import sys
 import csv
+import hashlib
 from datetime import datetime
 import MySQLdb
 #import pymysql
@@ -19,6 +20,7 @@ time_stamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 n = 0
 r = 0
 count = 0
+tmsi_list_digest = []
 
 for row in csv_f:
 	count = count + 1
@@ -88,18 +90,23 @@ try:
 except:
 	db.rollback()
 
+for item in tmsi_list:
+	tmsi_digest = hashlib.md5(item.encode('utf-8')).hexdigest()
+	tmsi_list_digest.append(tmsi_digest)
+
 for item in prev_tmsi_list:
-	if item in tmsi_list:
+	if item in tmsi_list_digest:
 		r = r + 1
 
 last_seen = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 for i in range(0,length):
 	tmsi = tmsi_list[i]
 	signal = signal_list[i]
+	tmsi_digest = hashlib.md5(tmsi.encode('utf-8')).hexdigest()
 
 	sql = "INSERT INTO cell_phone(tmsi, last_seen, signal_strength, lac, ci) \
 	VALUES ('%s', '%s', '%d', '%d', '%d')" % \
-	(tmsi, last_seen, int(signal), int(lac, 0), int(ci, 0))
+	(tmsi_digest, last_seen, int(signal), int(lac, 0), int(ci, 0))
 
 	try:
 		cursor.execute(sql)
