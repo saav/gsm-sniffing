@@ -22,11 +22,20 @@
   </head>
   <body>
     <?php  include($path."header.php");  ?>
+    <div id="currentValue"></div>
+    <input id="slider-time" type="range" value = "0" min="0" max="1440" />
     <div id="map"></div>
+
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <script>
 var map;
 var networkNames = ["Singtel", "StarHub", "M1"];
+
+
+var connectionTime = [];
+var heatMapData = [];
+var heatmap = {};
+
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: -1.3, lng: 103.8},
@@ -34,7 +43,6 @@ function initMap() {
     mapTypeId: google.maps.MapTypeId.HYBRID
   });
 
-var heatMapData = [];
 
   var message;
   $.getJSON('/backend.php?towers', function(msg) {
@@ -94,9 +102,11 @@ var heatMapData = [];
           $.getJSON('/backend.php?ci=' + this.dataToSend["cellTowers"][0]["cellId"] + '&lac='
             + this.dataToSend["cellTowers"][0]["locationAreaCode"], function(result) {
 
+            connectionTime = connectionTime.concat(result);
+
             heatMapData.push({location: new google.maps.LatLng( position.location.lat, position.location.lng ),
               weight: result[result.length - 1].new + result[result.length - 1].repeated });
-            var heatmap = new google.maps.visualization.HeatmapLayer({
+            heatmap = new google.maps.visualization.HeatmapLayer({
               data: heatMapData
             });
             heatmap.setOptions({radius: result[result.length - 1].new + result[result.length - 1].repeated});
@@ -114,6 +124,54 @@ var heatMapData = [];
   });
 
 }
+
+// $('#slider-time').slider({
+//   range: true,
+//   min: 0,
+//   max: 1440,
+//   step: 15,
+//   values: [ 600, 1200 ],
+//   slide: function( event, ui ) {
+//       var hours1 = Math.floor(ui.values[0] / 60);
+//       var minutes1 = ui.values[0] - (hours1 * 60);
+//
+//       if(hours1.length < 10) hours1= '0' + hours;
+//       if(minutes1.length < 10) minutes1 = '0' + minutes;
+//
+//       if(minutes1 == 0) minutes1 = '00';
+//
+//       var hours2 = Math.floor(ui.values[1] / 60);
+//       var minutes2 = ui.values[1] - (hours2 * 60);
+//
+//       if(hours2.length < 10) hours2= '0' + hours;
+//       if(minutes2.length < 10) minutes2 = '0' + minutes;
+//
+//       if(minutes2 == 0) minutes2 = '00';
+//
+//       $('#amount-time').val(hours1+':'+minutes1+' - '+hours2+':'+minutes2 );
+//   }
+// });
+
+
+var currentValue = $('#currentValue');
+$('#slider-time').change(function(){
+    var hours = Math.floor(this.value/60);
+    var minutes = this.value%60;
+    currentValue.html(hours + ":" + minutes);
+    console.log(this.value);
+
+    heatmap.setMap(null);
+
+    // heatMapData.push({location: new google.maps.LatLng( position.location.lat, position.location.lng ),
+    //   weight: result[result.length - 1].new + result[result.length - 1].repeated });
+    // var heatmap = new google.maps.visualization.HeatmapLayer({
+    //   data: heatMapData
+    // });
+    // heatmap.setOptions({radius: result[result.length - 1].new + result[result.length - 1].repeated});
+    // heatmap.setMap(map);
+
+	});
+
 
     </script>
     <!-- <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $mapsApiKey; ?>&callback=initMap"
